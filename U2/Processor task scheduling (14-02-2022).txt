@@ -1,0 +1,11 @@
+general :
+
+- overlapping (multi-cycle, pipelined) & non overlapping (single cycle, non-pipelined)
+- performance = 1/execution time
+- if X is n times faster than Y, then n = perf of X/perf of Y
+
+- CPU time = instruction count * clock cycle * cycles per instruction
+
+	- throughput * latency = queue size
+	- throughput : number of instructions per unit time
+	- latency : time taken per instruction 
