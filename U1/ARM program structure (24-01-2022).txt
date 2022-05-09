@@ -1,0 +1,39 @@
+thumb state :
+
+- 16 bit instruction set
+- memory friendly
+- optimized code density
+- good for low ram situations
+
+ARM program structure :
+
+- .text & .data
+- .text contains instructions
+- .data is used for variable declarations
+- on loading, addresses are assigned to each line during execution
+
+keywords :
+
+- ldr r0, =a; load register r0 with variable a
+- add r6, r4, r5; r6 = r4 + r5
+- str r0, [r1]; store the contents of r6 in longer term memory r3
+- a: .word 100; assigns 100 to variable a
+
+general format :
+
+- <mnemonic>{condition}{s} {rd}, operand1, operand2
+- mnemonic  : short name for the instruction e.g.; add, sub, str
+- condition : e.g.; eq in addeq (add if equal)
+- s : suffix
+- rd : destination register
+- operands : other registers
+
+instruction types :
+
+- data processing
+- data transfer
+- block transfer
+- branching
+- multiplication instructions
+- software interrupt instructions
+- program status 

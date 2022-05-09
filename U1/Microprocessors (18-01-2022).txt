@@ -1,0 +1,56 @@
+CISC :
+
+- small but expensive
+- explicit instructions for each operation (complex)
+- in instructions, one operand is implicit e.g.; mul bx, ax
+- fixed length
+
+- architecture :
+	- variable length instruction set
+	- direct values, no load/store
+	- smaller register size than risc
+
+- organization :
+	- programmed instruction decoding logic
+	- e.g.; pentium
+
+RISC :
+
+- simplified instructions
+- more lines of code but work per line is less (less load)
+- e.g.; multiplication would be expressed as repeated addition
+- variable length
+
+- architecture :
+	- 32 bit instructions
+	- load/store architecture
+	- large register bank
+	- few formats wrt instruction size
+
+- organization :
+	- hardwired instruction decoding logic
+	- pipelined execution
+	- single cycle execution
+
+- advantages :
+	- smaller die size
+	- shorter dev time
+	- high performance
+
+- disadvantages :
+	- poor code density
+	- x86 code incompatible
+
+processor design :
+
+- data movement takes up most usage in processors
+- optimizations are necessary to reduce the time taken for processes like data movement & control flow
+
+- techniques to speed up processors :
+	- pipelining
+	- using cache memory
+	- super scalar execution
+
+- RISC : complex compiler
+- CISC : complex hardware
+

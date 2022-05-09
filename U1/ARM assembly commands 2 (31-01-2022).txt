@@ -1,0 +1,20 @@
+general : 
+
+- mov r0, r1, lsl #2; left shifts (multiplication by 2^2) r1 by 2 bits (can be replaced by register holding a number) and moves result to r0
+- mov r0, r1, lsr #2; right shifts r1 by 2 bits (can be replaced by register holding a number) and moves result to r0
+- mov r0, r1, asr #2; right shifts r1 by 2 bits (can be replaced by register holding a number) adding 1's on the left instead of 0s and moves result to r0
+
+- mov r0, r1, ror #2; (can be replaced by register holding a number)
+
+	- rotate right
+	- sends the lsb to msb for each bit shift
+
+- mov r0, r1, rrx; rotate right extended, moves 1 lsb to carry bit and shifts carry bit to msb, (can be replaced by register holding a number)
+
+multiplication :
+
+- mov r1, r2, lsl #n; multiplies r2 by 2^n and transfers to r1
+- add r1, r1, r1, lsl #n; multiplies r1 by 2^n + 1 
+- rsb r1, r1, r1, lsl #n; multiplies r1 by 2^n - 1
+
+- cascading the last 3 instructions leads to multiplication by all possible numbers

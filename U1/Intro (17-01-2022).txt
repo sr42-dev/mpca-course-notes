@@ -1,0 +1,29 @@
+introduction :
+
+- 50/50 ISA/ESA split
+- ARMSIM 1.9.1
+- microprocessor : basic computing unit on IC
+- microprocessors are differentiated by instruction set, bandwidth & clock speed
+- computer architecture : decisions & tradeoffs in chip design
+- programmer & designer perception
+
+microcontroller :
+
+- task specific, compact
+- cpu, ram, rom, peripherals included
+- small resources, low cost
+
+microprocessor :
+
+- digital input
+- no ram, rom, peripherals internally
+- not compact system compatible
+- high power consumption
+- CISC, RISC, special purpose (based on instruction set architecture)
+
+- instruction set 
+- bandwidth : number of bits processed per instruction
+- clock speed : number of instructions that can be executed per second
+
+
+

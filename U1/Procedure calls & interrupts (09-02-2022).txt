@@ -1,0 +1,154 @@
+procedure calls :
+
+- bl can be used to move to code snippets after swi 0x011
+
+- returning to the main process can be done using
+	
+	- mov pc, lr
+	- bx lr
+
+- parameter passing using stacks are also possible 
+
+	- stm : push fa, ea, fd, ed
+	- ldm : pop
+	
+	- e.g.; 
+
+		.data 
+			
+			a: .word 0
+
+		.text
+
+			mov r1, #5
+			mov r2, #7
+			mov r6, =a
+			stmfd r13!, {r1, r2}; pushes r1 & r2 contents to stack (pointed to by r13 (stack pointer)) in full descending method
+			bl add; location of the next str command is stored in lr
+			
+			str r0, [r6]	
+			swi 0x011
+
+		add:	ldmfd r13!, {r4, r5}; pops the previously pushed elements to r4 & r5 respectively
+			add r0, r4, r5
+			mov pc, lr; moves contents of lr to pc (pc contains location of command to be executed next)
+
+- nested procedure call 
+
+	- when a function calls another function, lr values start being stored in a stack
+
+	- e.g.; 
+
+		.data
+			
+			a: .word 0
+
+		.text
+
+			mov r1, #11
+			mov r2, #10
+			mov r3, #2
+			stmfd r13!, {r1, r2, r3}
+			bl mul
+
+			str r7, [r8]
+			swi 0x011
+
+		mul:	ldmfd r13!, {r4, r5, r6}
+			stmfd r13!, {r4, r5, lr}; nested calls require explicit pushing of lr values to stack
+			bl add
+			mul r7, r0, r6
+			ldmfd r13!, {lr}
+			mov pc, lr 
+
+		add:	ldmfd r13!, {r4, r5}
+			add r0, r4, r5
+			mov pc, lr
+
+interrupts/exceptions :
+
+- reset, software (swi 0xXX) & hardware interrupt (fiq, irq, timer, adc, external interrupt)
+- fast interrupt requests have highest priority
+- software interrupt causes transition to svc mode
+
+- e.g.; 
+	; 0x11 swi code
+	.text 
+
+		mov r0, #10
+		mov r1, #10
+		bl p1
+		swi 0x11; 0x11 terminates program
+		sub r2, r1, r0
+
+	p1: 	cmp r0, r1
+		addeq r2, r0, r1
+		mov pc, lr
+
+	.end
+
+- e.g.; 
+
+	; program to display a string on screen using interrupt code 0x02
+	
+	.data 
+
+		a: .asciz "hello world"; asciz appends null to eos, ascii doesn't
+		
+	.text 
+
+		ldr r0, =a
+		swi 0x02; displays string on screen
+		swi 0x11
+
+	.end
+
+- e.g.; 
+
+	; program to display a string on screen by explicitly checking for null
+	
+	.data 
+
+		a: .asciz "hello world"
+
+	.text 
+
+		ldr r0, =a
+	
+	loop:	ldrb r0, [r1], #1
+		cmp r0, #0; checks for null
+		swine 0x00; interrupt if not equal
+		bne loop
+
+		swi 0x11
+
+	.end
+
+- e.g.; 
+
+	; program to display a string on screen by explicitly checking for null annd executing procedural calls
+	
+	.data 
+
+		a: .asciz "hello world"
+
+	.text 
+
+		ldr r0, =a
+		bl strprt
+		swi 0x11
+	
+	strprt:	ldrb r0, [r1], #1
+		cmp r0, #0; checks for null
+		swine 0x00; interrupt if not equal
+		bne strprt
+		mov pc, lr
+
+		swi 0x11
+
+	.end
+
+
+
+
+	

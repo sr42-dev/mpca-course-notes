@@ -1,0 +1,183 @@
+addressing modes :
+
+- pre indexing without writeback :
+
+	- ldr r0, [r1, #4]
+	- r1 remains unchanged
+
+	- e.g.; 
+
+		; preindexing without writeback
+		
+		.data 
+
+			a: .word 10, 20, 30, 40, 50
+
+		.text 
+
+			ldr r1, =a
+			ldr r2, [r1, #4]
+
+			; o/p : r1 unchanged, r2 holds 20
+
+
+	- e.g.; 
+
+		; sum of n numbers using preindexing without writeback
+		
+		.data 
+
+			a: .word 10, 20, 30, 40, 50
+			sum: .word 0
+
+		.text 
+
+			ldr r1, =a
+			ldr r2, =sum
+			ldr r4, [r1]; sum register, moving first element value
+			mov r5, #1; count register
+
+		loop:	ldr r3, [r1, #4]
+			add r4, r4, r3
+			add r1, r1, #4
+			add r5, r5, #1
+		
+			cmp r5, #5; one less iteration due to initialization
+			bne loop
+
+			str r4, [r2]
+	
+		.end
+
+- pre indexing with writeback :
+
+	- ldr r0, [r1, #4]!
+	- r1 += 4 is also performed
+	- e.g.; 
+
+		; preindexing with writeback
+		
+		.data 
+
+			a: .word 10, 20, 30, 40, 50
+
+		.text 
+
+			ldr r1, =a
+			ldr r2, [r1, #4]!
+
+			; o/p : r1 += 4, r2 holds 20
+
+	- e.g.; 
+
+		; sum of n numbers using preindexing with writeback
+		
+		.data 
+
+			a: .word 10, 20, 30, 40, 50
+			sum: .word 0
+
+		.text 
+
+			ldr r1, =a
+			ldr r2, =sum
+			ldr r4, [r1]; sum register, moving first element value
+			mov r5, #1; count register
+
+		loop:	ldr r3, [r1, #4]!
+			add r4, r4, r3
+			add r5, r5, #1
+		
+			cmp r5, #5; one less iteration due to initialization
+			bne loop
+
+			str r4, [r2]
+	
+		.end
+
+- auto indexing addressing :
+
+	- ldr r0, [r1, #4]; disregard
+	- r1 += 4 is also performed before loading
+
+- post indexing addressing :
+
+	- ldr r0, [r1], #4
+	- r1 += 4 is also performed after loading 
+
+	- e.g.; 
+
+		; sum of n numbers using postindexing
+		
+		.data 
+
+			a: .word 10, 20, 30, 40, 50
+			sum: .word 0
+
+		.text 
+
+			ldr r1, =a
+			ldr r2, =sum
+			mov r4, #0
+			move r5, #1
+
+		loop:	ldr r3, [r1], #4
+			add r4, r4, r3
+			add r5, r5, #1
+		
+			cmp r5, #5; one less iteration due to initialization
+			bne loop
+
+			str r4, [r2]
+	
+		.end
+
+	- e.g.; 
+
+		; copying to multiple registers
+		
+		.data 
+
+			a: .word 10, 20, 30
+
+		.text 
+
+			ldr r0, =a
+			ldr r1, [r0], #4
+			ldr r2, [r0], #4
+			ldr r3, [r0]
+
+		.end
+
+block transfers :
+
+- alternative to multiple individual postindex copying
+- ldm, stm
+- syntax : <ldm/stm>{condition}<addressing mode>Rn{!}registers
+
+- e.g.; 
+		
+	.data 
+
+		a: .word 10, 20, 30
+		b: .word	
+
+	.text 
+
+		ldr r0, =a
+		ldmia r0, {r1, r2, r3}; or ldmia r0, {r1-r3}
+		ldr r4, =b
+		stmia r4, {r1, r2, r3}; or stmia r0, {r1-r3}
+
+	.end
+
+addressing modes :
+
+- ia : increment after
+- ib : increment before
+- da : decrement after
+- db : decrement before
+
+- stack can grow upward (increasing addresses, ascending) or downward (decreasing addresses, descending)
+- stmfd, stmed, stmfa, stmea
+- pre indexing with writeback is auto indexing

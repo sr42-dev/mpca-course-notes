@@ -1,0 +1,35 @@
+general :
+
+- all assembly instructions have to be translated to machine code 
+- 26th & 27th bits are 0 for dataprocessing
+- 25th bit will be 0 if operand 2 is a register
+- 4th bit will be 0 if shifter value is immediate, 1 if register
+
+data processing instructions :
+
+- instructions contain
+
+	- condition : 31 to 28 (1110 for unconditional)
+	- 0 0 : 27 to 26
+	- # code : 25, operand 2 register status
+	- opcode : 24 to 21
+	- Rn : 19 to 16
+	- Rd : 15 to 12
+	
+	- operand 2 :
+
+		- other information : 11 to 4
+		- Rm : 3 to 0
+
+branch instructions :
+
+- instructions contain
+
+	- condition : 31 to 28 (1110 for unconditional)
+	- 1 0 1 : 27 to 25
+	- link bit : 24, 0 for branch, 1 for branch with link
+	- offset : 23 to 0
+
+multiplication instructions :
+
+-

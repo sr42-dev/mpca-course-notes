@@ -1,0 +1,28 @@
+branch instructions :
+
+- branches execute statements under label and return to initial branch statement after
+- branching causes address of label to be loaded to r15(pc)
+
+- b <label>; moves to label
+- bl <label>; moves to label and copies address of next instruction to r14(lr)
+
+- bne, beq, blt etc are conditional branches taken depending on the result of the preceding comparison statements
+- e.g.; program to find sum of n numbers (refer mcpa lab2 programs)
+
+addressing memory locations :
+
+- ldr, str, ldrb, strb, ldrh, strh etc.
+- ldr r0, [r1]
+- ldr r0, [r1, #1]; r1 + 1 moved to r0
+- ldr r0, [r1, r2]; r1 + r2 moved to r0
+- ldr r0, [r1, r2, lsl #2]; r1 + 4r2 moved to r0
+
+commenting :
+
+- ; : single line comment
+- /**/ : multiline comment
+
+ending a program :
+
+- can be done by software interrupt SWI 0x011
+- .end also works

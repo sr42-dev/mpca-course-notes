@@ -1,0 +1,11 @@
+psr instructions :
+
+- psr instructions are used to read from cpsr & spsr
+- msr r0, <cpsr/spsr>; read
+- msr cpsr_f, r0; write
+- setting and resetting bits can be done by 'or 1' and 'and 0' respectively
+
+swap instruction :
+
+- swp r0, r1, [r2]
+- the above instruction loads r2 to r0 and swaps r1 & r2

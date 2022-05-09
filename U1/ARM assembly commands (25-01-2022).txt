@@ -1,0 +1,25 @@
+general :
+
+- mvn r0, r1; moves negated value of r1 to r0
+- mov r0, r1; moves value in r1 to r0
+
+- cmp r0, r1; compares r0 & r1 and flags in cpsr
+- cmn r0, r1; performs r0 & r1, negates and flags in cpsr (n is a suffix)
+- tst r0, r1; performs r0 & r1 and sets flag in cpsr
+- teq r0, r1; performs r0 xor r1 & flags in cpsr
+
+- adc r0, r1, r2; performs r0 = r1 + r2 + c and flags carry in cpsr (c is a suffix)
+- rsb r0, r1, r2; subtraction but operand order switched
+- sbc r0, r1, r2; performs r0 = r1 - r2 + c - 1 and flags carry in cpsr (c-1 ensures that the result is reduced by 1 if carry flag is clear)
+
+- and r0, r1, r2; r0 = r1 & r2
+- orr r0, r1, r2; r0 = r1 | r2
+- eor r0, r1, r2; r0 = r1 ^ r2
+- bic r0, r1, r2; r0 = r1 & ~r2
+
+barrel shifter :
+
+- 1 operand to ALU is always routed through barrel shifter in ARM
+- operations : lsl, lsr, asr, ror, rrx
+- instructions can be cascaded to execute within a single cycle 
+- e.g.; add r0, r1, r2, lsl #n; left shifts r2 by n bits (multiplies r2 with 2^n) and executes r0 = r1 + r2

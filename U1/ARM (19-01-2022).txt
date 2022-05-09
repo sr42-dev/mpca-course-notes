@@ -1,0 +1,62 @@
+general :
+
+- features of ARM :
+	- load/store
+	- 32 bit instructions
+	- 3 instruction formats
+
+- RISC features rejected by ARM
+	- register windows : large chip area due to large number of registers
+	- delayed branches : when a delay occurs when executing branched commands e.g.; loops (does not scale well to super scalar implementations)
+	- single cycle execution : ARM executes most data processing instructions in 1 cycle (possible due to seperate data and instruction memories)
+	
+- 3 stage pipelining :
+	- when 3rd instruction is fetched
+	- 2nd instruction is being decoded at that time
+	- 1st instruction is being executed at that time
+	- all in one cycle : single cycle
+
+- <architecture diagram>
+
+- components :
+	- register bank :
+		- 2 read ports & 1 write port
+		- additional read & write port to access r15 (program counter)
+		- registers are used to store instructions & break points
+	- barrel shifter : used to perform multiplication & division	
+	- ALU : adds, subtracts & compares
+	- address register : gets addresses of sequential & non-sequential memory blocks
+	- data register : stores data retrieved from memory byaddress register
+	- instruction register & control logic : 
+		- r15 is dedicated to the program counter
+		- PC reads address & increments it before returning it to the register
+
+- modes for register bank :
+	- User
+	- FIQ : fast interrupt (high priority) (only r8 to r14 + spsr accessible)
+	- IRQ : interrupt (low priority) (only r13, 14 & spsr accessible)
+	- SVC : supervisor (protected) (only r13, 14 & spsr accessible)
+	- Undef : undefined (only r13, 14 & spsr accessible)
+	- Abort (used to terminate programs e.g.; ctrl+Z, seg. fault (undefined reference to memory)) (only r13, 14 & spsr accessible)
+
+- register bank special registers :
+	- CPSR : current program status register (holds 4 status bits)
+	- SPSR : saved program status register (holds 4 status bits)
+	- r13 (stack pointer) : holds the location of the last item pushed to the stack
+	- r14 (link register) : 
+		- holds return address when calling a function/subroutine
+		- when an abort occurs, r14 holds the return address for the program to go back to
+
+- status register (in order) :
+	- 4 bits of flags :
+		- Negative (N) : set to 1 if result of previous instruction is -ve
+		- Zero (Z) : set to 1 if result of previous instruction is 0
+		- Carry (C) :set to 1 if result of previous instruction has a carry out
+		- oVerflow (V) : set to 1 if result of previous instruction has an overflow
+	- 20 undefined bits
+	- 3 interrupt disable bits :
+		- I : disables interrupt if set to 1
+		- F : disables fast interrupt if set to 1
+		- T : ARM state if set to 1 (if thumb mode supported when short of memory)
+		- <look up thumb mode in slides>
+	- 5 mode bits : defines mode <look up mode bits>

@@ -1,0 +1,7 @@
+general :
+
+- barrel shifters are cascaded with ALU in ARM
+- optional use
+- right shift by 1 : division of number by 2^1
+- left shift by 1 : multiplication by 2^1
+- by default, empty spaces are filled with zeros
